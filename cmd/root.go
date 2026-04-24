@@ -9,8 +9,9 @@ import (
 )
 
 var (
-	cfg        *config.Config
-	targetFlag string
+	cfg         *config.Config
+	targetFlag  string
+	verboseFlag bool
 )
 
 var rootCmd = &cobra.Command{
@@ -28,6 +29,7 @@ func Execute() {
 
 func init() {
 	rootCmd.PersistentFlags().StringVar(&targetFlag, "target", "all", "Target to operate on (e.g. ios, macos, all)")
+	rootCmd.PersistentFlags().BoolVarP(&verboseFlag, "verbose", "v", false, "Stream full command output instead of summary")
 
 	rootCmd.PersistentPreRunE = func(cmd *cobra.Command, args []string) error {
 		var err error

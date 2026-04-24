@@ -17,9 +17,9 @@ var buildCmd = &cobra.Command{
 		}
 
 		for name, target := range targets {
-			fmt.Printf("==> Building target: %s\n", name)
+			fmt.Printf("==> Building: %s (scheme=%s)\n", name, target.Scheme)
 			xargs := xcodebuildArgs(cfg, target, "build")
-			if err := runner.Run(cfg.Dir, xargs...); err != nil {
+			if err := runner.Run(cfg.Dir, verboseFlag, xargs...); err != nil {
 				return fmt.Errorf("build failed for target %q: %w", name, err)
 			}
 		}

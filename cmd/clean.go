@@ -17,9 +17,9 @@ var cleanCmd = &cobra.Command{
 		}
 
 		for name, target := range targets {
-			fmt.Printf("==> Cleaning target: %s\n", name)
+			fmt.Printf("==> Cleaning: %s (scheme=%s)\n", name, target.Scheme)
 			xargs := xcodebuildArgs(cfg, target, "clean")
-			if err := runner.Run(cfg.Dir, xargs...); err != nil {
+			if err := runner.Run(cfg.Dir, verboseFlag, xargs...); err != nil {
 				return fmt.Errorf("clean failed for target %q: %w", name, err)
 			}
 		}

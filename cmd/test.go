@@ -22,7 +22,7 @@ var testCmd = &cobra.Command{
 		}
 
 		for name, target := range targets {
-			fmt.Printf("==> Testing target: %s\n", name)
+			fmt.Printf("==> Testing: %s (scheme=%s)\n", name, target.Scheme)
 			xargs := xcodebuildArgs(cfg, target, "test")
 			if onlyTesting != "" {
 				xargs = append(xargs, "-only-testing", onlyTesting)
@@ -30,7 +30,7 @@ var testCmd = &cobra.Command{
 			if testPlan != "" {
 				xargs = append(xargs, "-testPlan", testPlan)
 			}
-			if err := runner.Run(cfg.Dir, xargs...); err != nil {
+			if err := runner.Run(cfg.Dir, verboseFlag, xargs...); err != nil {
 				return fmt.Errorf("tests failed for target %q: %w", name, err)
 			}
 		}
